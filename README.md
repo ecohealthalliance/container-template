@@ -216,3 +216,101 @@ This can be done as follows:
 
 5.  You can now make the necessary changes and additions that are
     specific to your workflow.
+
+## Using `git-crypt` to encrypt files in your workflow
+
+Your project may contain a mix of public and private content. Being able
+to encrypt the private contents of your project is very useful. It is
+recommended that you use PGP (Pretty Good Privacy) encryption,
+implemented by the program
+[`git-crypt`](https://github.com/AGWA/git-crypt). It takes a bit to set
+up but once activated makes sharing secure and seamless. To setup PGP
+and `git-crypt` on your project that is based on this template, see the
+[*Encryption* chapter of the EHA Modeling and Analytics
+Handbook](https://ecohealthalliance.github.io/eha-ma-handbook/13-encryption.html).
+
+Once you have enabled `git-crypt` on your project, you will need to make
+the following edits to the `container-workflow-template.yml` file to be
+able to perform symmetric key decryption described
+[here](https://ecohealthalliance.github.io/eha-ma-handbook/13-encryption.html#extra-use-a-symmetric-key-for-automated-processes).
+Here is the `container-workflow-template.yml` file updated to allow and
+perform symmetric key decryption:
+
+``` yaml
+name: container-workflow-encrypted-template
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    branches:
+      - '*'
+  #schedule:
+  #  - cron: "0 8 * * *"
+
+env:
+  GIT_CRYPT_KEY64: ${{ secrets.GIT_CRYPT_KEY64 }}
+      
+jobs:
+  container-workflow-encrypted-tempalte:
+    runs-on: ubuntu-latest                                # Run on GitHub Actions runner
+    #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner
+    #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
+    container:
+      image: rocker/verse:4.1.2
+      
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Install system dependencies
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+          git-crypt \
+          libcurl4-openssl-dev \
+          libssl-dev
+          
+      - name: Decrypt repository using symmetric key
+        run: |
+          echo $GIT_CRYPT_KEY64 > git_crypt_key.key64 && base64 -di git_crypt_key.key64 > git_crypt_key.key && git-crypt unlock git_crypt_key.key
+          rm git_crypt_key.key git_crypt_key.key64
+      
+      - name: Restore R packages
+        run: |
+          renv::restore()
+        shell: Rscript {0}
+    
+      - name: Run targets workflow
+        run: |
+          targets::tar_make()
+        shell: Rscript {0}
+```
+
+Once you have edited your worklfow YAML file and before you push the
+changes to GitHub, you will then have to add the symmetric key to your
+GitHub repository as a secret.
+
+First, generate a symmetric key by running this in your project
+directory.
+
+``` bash
+git-crypt export-key git_crypt_key.key
+```
+
+`git_crypt_key.key` can now be used to decrypt the repository, and you
+can provide it to GitHub Actions as a secret environment variable (see
+<https://docs.github.com/en/actions/security-guides/encrypted-secrets>).
+However, since it is binary data, you’ll need to convert it to base64
+first. So run something like:
+
+``` bash
+cat git_crypt_key.key | base64 | pbcopy
+```
+
+to convert this file to base64 data, then paste it in GitHub’s secret
+environment variable field as `GIT_CRYPT_KEY64`.

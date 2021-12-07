@@ -1,0 +1,40 @@
+name: container-workflow-template
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    branches:
+      - '*'
+      
+jobs:
+  container-workflow-tempalte:
+    runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
+    container:
+      image: rocker/r-ver:4.1.2
+      
+    steps:
+#      - name: Install system dependencies
+#        run: |
+#          apt-get update && apt-get install -y --no-install-recommends \
+#          git git-crypt
+          
+      - uses: actions/checkout@v2
+      
+      - name: Restore R packages
+        run: |
+          renv::restore(clean = TRUE)
+        shell: Rscript {0}
+    
+      - name: Run targets workflow
+        run: |
+          targets::tar_make()
+        shell: Rscript {0}
+      

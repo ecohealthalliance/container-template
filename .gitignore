@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_Store
+targets/
+outputs/
+!outputs/.gitkeep
+!outputs/example_report.html
+data/
+!data/.gitkeep
+

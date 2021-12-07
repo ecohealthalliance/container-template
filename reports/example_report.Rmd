@@ -1,0 +1,77 @@
+---
+title: "Example Rmarkdown Report"
+author: "EcoHealth Alliance"
+date: "Produced on `r Sys.Date()`"
+output:
+  html_document:
+    code_download: TRUE
+    self_contained: TRUE
+    toc: TRUE
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figures/"
+)
+
+
+library(zscorer)
+library(nipnTK)
+library(nutricheckr)
+
+targets::tar_load(
+  c(nutrition_data, 
+    nutrition_data_check,
+    nutrition_data_issues,
+    nutrition_data_clean, 
+    wasting_recode, 
+    wasting_prevalence)
+)
+```
+
+This is an example `Rmarkdown` report produced through a workflow built on the `targets` framework, made portable using `renv`, and ran manually or automatically using `GitHub Actions`. In this example, we show a data quality check workflow report for a nutrition survey of children 6-59 months old.
+
+## Get anthropometric data
+
+Following is an anthropometric dataset from a single state of a West African country.
+
+```{r, echo = FALSE}
+head(nutrition_data, 20) |>
+  knitr::kable(row.names = FALSE) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("basic"),
+    full_width = FALSE,
+    position = "center"
+  )
+```
+
+## Perform a standard anthropometric data quality check
+
+We perform a standard anthropometric data quality check by calculating the z-scores for the various anthropometric indices and then flag implausible values based on WHO cut-offs. We get the following results
+
+```{r, echo = FALSE}
+head(nutrition_data_check, 20) |>
+  knitr::kable(row.names = FALSE) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("basic"),
+    full_width = FALSE,
+    position = "center"
+  )
+```
+
+Focusing on data rows with issues, we see:
+
+```{r, echo = FALSE}
+head(nutrition_data_issues) |>
+  knitr::kable(row.names = FALSE) |>
+  kableExtra::kable_styling(
+    bootstrap_options = c("basic"),
+    full_width = FALSE,
+    position = "center"
+  )
+```

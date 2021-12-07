@@ -17,9 +17,9 @@ on:
       
 jobs:
   container-workflow-template:
-    runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    runs-on: ubuntu-latest                               # Run on GitHub Actions runner
+    #runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
     #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
-    #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
     container:
       image: rocker/verse:4.1.2
       

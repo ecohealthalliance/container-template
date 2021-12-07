@@ -39,13 +39,13 @@ detailed using a workflow `.yml` file that is saved inside a directory
 named `.github` within your GitHub repository in which you want to use
 [GitHub Actions](https://docs.github.com/en/actions) on.
 
+<img src=https://miro.medium.com/max/2617/1*8mUtip6z_oydfLi4P86KUw.png />
+
 This repository, contains a template [GitHub
 Actions](https://docs.github.com/en/actions) workflow with its
 corresponding `.yml` file that illustrates how [GitHub
 Actions](https://docs.github.com/en/actions) can be used to run and
 maintain an R workflow that uses `targets` and `renv`.
-
-<img src=https://miro.medium.com/max/2617/1*8mUtip6z_oydfLi4P86KUw.png />
 
 ## Using containers in GitHub Actions workflow
 

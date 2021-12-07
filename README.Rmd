@@ -63,9 +63,9 @@ on:
       
 jobs:
   container-workflow-tempalte:
-    runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    runs-on: ubuntu-latest                                # Run on GitHub Actions runner
+    #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner
     #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
-    #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
     container:
       image: rocker/verse:4.1.2
       
@@ -123,21 +123,33 @@ The job for GitHub Actions is specified in these lines in the workflow YAML file
 ```yaml
 jobs:
   container-workflow-template:
-    runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    runs-on: ubuntu-latest                                # Run on GitHub Actions runner
+    #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner
     #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
-    #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
     container:
       image: rocker/verse:4.1.2
 ```
 
-The job named `container-workflow-template` is specified to run on a self-hosted GitHub Actions runner that is installed on EHA's `aegypti` machine using the `runs-on` workflow YAML specification. Tags unique to this GitHub runner are used to identify the specific machine to use.
+The job named `container-workflow-template` is specified to run on runners hosted by GitHub Actions. These runners can be identified through a tag that specifies the operating software followed by the version. In the example workflow, the line specifying `runs-on: ubuntu-latest` runs the workflow on a machine hosted by GitHub Actions with the latest Ubuntu operating software.
 
-The job can also be run using runners hosted by GitHub Actions. These runners can be identified through a tag that specifies the operation software followed by the version. In the example workflow, a hased out line specifying `ubuntu-latest` will run the workflow on a machine with the latest Ubuntu operating software.
+The job can also be run on a self-hosted GitHub Actions runner that is installed on EHA's high performance computing machines using the `runs-on` workflow YAML specification. Tags unique to this GitHub runner are used to identify the specific machine to use. Syntax on how to specify these runners are shown but hashed out.
 
 To further make the GitHub Actions workflow more robust and reproducible, we setup a container at the **job** level. The container specified is a versioned R image that has `tidyverse` and other R publishing tools installed. This container image would generally be adequate for most workflows that require data wrangling and manipulation using the `tidyverse` tools and reporting using `rmarkdown`. Some projects/workflows (like those using spatial packages such as `sf`) may benefit from using a different R image so change the container specification accordingly. To read more about available R images, see https://www.rocker-project.org/images/.
 
 
+## Using this GitHub Actions workflow template
 
+This repository has been set as a private template repository. This means that this can be used by EHA staff for creating new repositories with the same filesystem.
 
+This can be done as follows:
 
+1. In your GitHub account, go to the EcoHealth Alliance organisation (https://github.com/ecohealthalliance) then click on the green button labeled `New`.
+
+2. You will now be directed to the `Create new repository` page. Here, right at the top, you will see the `Repository template` heading. Click on the drop down button right below this that says `No template`. You will then see all the available templates within EHA. Select the template named `ecohealthalliance/container-template`.
+
+3. Give your new repository a name, set the appropriate repository visibility, and then click on `Create repository`.
+
+4. You will now have a new repository the contents of which are the same files and structure as this template repository.
+
+5. You can now make the necessary changes and additions that are specific to your workflow.
 

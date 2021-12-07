@@ -25,8 +25,9 @@ jobs:
         run: |
           apt-get update && apt-get install -y --no-install-recommends \
           libcurl4-openssl-dev \
-          libssl-dev
-#          r-cran-haven
+          libssl-dev \
+          r-cran-haven \
+          r-cran-httpuv
           
       - uses: actions/checkout@v2
       

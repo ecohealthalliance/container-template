@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 .DS_Store
-targets/
+_targets/
 outputs/
 !outputs/.gitkeep
 !outputs/example_report.html

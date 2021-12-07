@@ -10,6 +10,7 @@ has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)\](<https://www.repostatus.org/#wip>
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![container-workflow-template](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml/badge.svg)](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml)
 <!-- badges: end -->
 
 This is a template repository of a containerised R workflow built on the
@@ -59,11 +60,8 @@ specified at the **job** level, all the **steps** within that **job**
 will be run inside that container. When specified at the **steps**
 level, different containers can be used for each **step**.
 
-The example/template workflow can be found inside the `.github` folder.
-
-The basic [GitHub Actions](https://docs.github.com/en/actions) workflow
-that uses a container with the image of the most recent version of R and
-that runs on GitHub runners is specified as follows:
+The example/template workflow can be found inside the `.github` folder
+and is shown below:
 
 ``` yaml
 name: container-workflow-template
@@ -80,20 +78,29 @@ on:
   workflow_dispatch:
     branches:
       - '*'
+  #schedule:
+  #  - cron: "0 8 * * *"
       
 jobs:
   container-workflow-tempalte:
     runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
     #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
     container:
-      image: rocker/r-ver:4.1.2
+      image: rocker/verse:4.1.2
       
     steps:
       - uses: actions/checkout@v2
+    
+      - name: Install system dependencies
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+          libcurl4-openssl-dev \
+          libssl-dev
       
       - name: Restore R packages
         run: |
-          renv::restore(clean = TRUE)
+          renv::restore()
         shell: Rscript {0}
     
       - name: Run targets workflow
@@ -103,8 +110,79 @@ jobs:
 ```
 
 In this example, we show a data quality check workflow report for a
-nutrition survey of children 6-59 months old. The container is setup at
-the **job** level and as such each step is performed within the
-specified container. This workflow is triggered by any ***push*** or
-***pull request*** to the main/master branch of the repository and can
-be manually run from the GitHub Actions page of the repository.
+nutrition survey of children 6-59 months old.
+
+### The trigger
+
+The trigger for GitHub Actions is specified in these lines in the
+workflow YAML file:
+
+``` yaml
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    branches:
+      - '*'
+  #schedule:
+  #  - cron: "0 8 * * *"
+```
+
+This workflow automatically runs when there is a **push** or **pull
+request** event to the main branch of the repository. This workflow has
+also been set to have the option to be run manually from the GitHub
+Actions page for any branch of the repository through the
+`workflow-dispatch` specification in the workflow YAML file.
+
+GitHub Actions can also be scheduled to run at specific times and
+frequency using the `schedule` specification in the workflow YAML file
+using [POSIX cron syntax](https://en.wikipedia.org/wiki/Cron). Scheduled
+workflows run on the latest commit on the default or base branch. The
+shortest interval you can run scheduled workflows is once every 5
+minutes. In the example workflow, the `schedule` specification has been
+set to run at 8 am everyday but this has been hashed out. If you would
+like to schedule your workflow runs, remove the hash and then set the
+POSIX cron syntax to the frequency that you require.
+
+### The job
+
+The job for GitHub Actions is specified in these lines in the workflow
+YAML file:
+
+``` yaml
+jobs:
+  container-workflow-template:
+    runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
+    #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
+    #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
+    container:
+      image: rocker/verse:4.1.2
+```
+
+The job named `container-workflow-template` is specified to run on a
+self-hosted GitHub Actions runner that is installed on EHA’s `aegypti`
+machine using the `runs-on` workflow YAML specification. Tags unique to
+this GitHub runner are used to identify the specific machine to use.
+
+The job can also be run using runners hosted by GitHub Actions. These
+runners can be identified through a tag that specifies the operation
+software followed by the version. In the example workflow, a hased out
+line specifying `ubuntu-latest` will run the workflow on a machine with
+the latest Ubuntu operating software.
+
+To further make the GitHub Actions workflow more robust and
+reproducible, we setup a container at the **job** level. The container
+specified is a versioned R image that has `tidyverse` and other R
+publishing tools installed. This container image would generally be
+adequate for most workflows that require data wrangling and manipulation
+using the `tidyverse` tools and reporting using `rmarkdown`. Some
+projects/workflows (like those using spatial packages such as `sf`) may
+benefit from using a different R image so change the container
+specification accordingly. To read more about available R images, see
+<https://www.rocker-project.org/images/>.

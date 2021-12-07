@@ -17,7 +17,7 @@ library(rmarkdown)
 #
 #' Additional R packages needed to run your specific workflow
 #' 
-#' * Delete or hash out code for R packages you don't need for your workflow
+#' * Delete or hash out lines of code for R packages not needed in your workflow
 #' * Insert code here to load additional R packages that your workflow requires
 #
 ################################################################################

@@ -45,7 +45,7 @@ corresponding `.yml` file that illustrates how [GitHub
 Actions](https://docs.github.com/en/actions) can be used to run and
 maintain an R workflow that uses `targets` and `renv`.
 
-<!--- INSERT IMAGE OF THE COMPONENTS HERE --->
+<img src=https://miro.medium.com/max/2617/1*8mUtip6z_oydfLi4P86KUw.png />
 
 ## Using containers in GitHub Actions workflow
 

@@ -30,7 +30,7 @@ jobs:
       
       - name: Restore R packages
         run: |
-          renv::restore(clean = TRUE)
+          renv::restore()
         shell: Rscript {0}
     
       - name: Run targets workflow

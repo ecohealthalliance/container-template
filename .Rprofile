@@ -4,8 +4,6 @@ options(repos = c(
   renv.config.rspm.enabled = TRUE
 )
 
-Sys.setenv(RENV_PATHS_CACHE = "~/.local/share/renv")
-
 source("renv/activate.R")
 
 

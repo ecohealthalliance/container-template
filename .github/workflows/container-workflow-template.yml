@@ -18,7 +18,7 @@ jobs:
     runs-on: [self-hosted, linux, x64, onprem-aegypti]    # Run the workflow on EHA aegypti runner
     #runs-on: ubuntu-latest                               # Run on GitHub Actions runner
     container:
-      image: rocker/r-ver:4.1.2
+      image: rocker/r-ver:4.1.1
       
     steps:
       - name: Install system dependencies

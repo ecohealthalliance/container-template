@@ -21,10 +21,10 @@ jobs:
       image: rocker/r-ver:4.1.2
       
     steps:
-#      - name: Install system dependencies
-#        run: |
-#          apt-get update && apt-get install -y --no-install-recommends \
-#          git git-crypt
+      - name: Install system dependencies
+        run: |
+          apt-get update && apt-get install -y --no-install-recommends \
+          libcurl4-openssl-dev
           
       - uses: actions/checkout@v2
       

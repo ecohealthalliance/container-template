@@ -32,10 +32,12 @@ jobs:
           libcurl4-openssl-dev \
           libssl-dev
 
-      - uses: r-lib/actions/setup-renv@v1
-        with:
-          cache-version: 1
-    
+
+      - name: Run targets workflow
+        run: |
+          renv::restore()
+        shell: Rscript {0}
+        
       - name: Run targets workflow
         run: |
           targets::tar_make()

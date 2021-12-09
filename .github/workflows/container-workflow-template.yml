@@ -39,7 +39,7 @@ jobs:
           cache-version: 2
 
       - name: Install packages from renv.lock (local, no cache)
-        if: ${{ env.ACT }}  ## Only locally with ACT
+        if: ${{ env.ACT }}  ## Only locally with ACT, use `act -r` to reuse containers, effectively caching locally
         run: |
           renv::restore()
         shell: Rscript {0}

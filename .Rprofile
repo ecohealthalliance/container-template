@@ -7,7 +7,8 @@ if (Sys.info()[['sysname']] %in% c('Linux', 'Windows')) {
 } else {
   ## For Mac users, we'll default to installing from CRAN/MRAN instead, since
   ## RSPM does not yet support Mac binaries.
-  options(repos = c(CRAN = "https://cran.rstudio.com/"))
+  options(repos = c(CRAN = "https://cran.rstudio.com/"),
+          pkgType = "both")
   # options(renv.config.mran.enabled = TRUE) ## TRUE by default
 }
 

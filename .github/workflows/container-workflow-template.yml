@@ -34,7 +34,7 @@ jobs:
           
       - name: Install packages from renv.lock (with cache)
         if: ${{ !env.ACT }}  ## Doesn't work locally with ACT
-        uses: r-lib/actions/setup-renv@v1
+        uses: r-lib/actions/setup-renv@master
         with:
           cache-version: 1
 

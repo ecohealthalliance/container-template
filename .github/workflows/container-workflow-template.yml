@@ -31,14 +31,26 @@ jobs:
           apt-get update && apt-get install -y --no-install-recommends \
           libcurl4-openssl-dev \
           libssl-dev
-      
-      - name: Restore R packages
+          
+      - name: Install packages from renv.lock (with cache)
+        if: ${{ !env.ACT }}  ## Doesn't work locally with ACT
+        uses: r-lib/actions/setup-renv@master
+        with:
+          cache-version: 2
+
+      - name: Install packages from renv.lock (local, no cache)
+        if: ${{ env.ACT }}  ## Only locally with ACT, use `act -r` to reuse containers, effectively caching locally
         run: |
           renv::restore()
         shell: Rscript {0}
-    
+        
       - name: Run targets workflow
         run: |
           targets::tar_make()
         shell: Rscript {0}
+        
+      - name: On failure, launch a temporary interactive debugging session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+        timeout-minutes: 15
       

@@ -14,7 +14,7 @@ if (Sys.info()[['sysname']] %in% c('Linux', 'Windows')) {
 
 options(
   renv.config.repos.override = getOption("repos"),
-  renv.config.auto.snapshot = TRUE, ## Attempt to keep renv.lock updated automatically
+  renv.config.auto.snapshot = FALSE, ## Don't keep renv.lock updated automatically (messes up GitHub Actions)
   renv.config.rspm.enabled = TRUE, ## Use RStudio Package manager for pre-built package binaries
   renv.config.install.shortcuts = TRUE, ## Use the existing local library to fetch copies of packages for renv
   renv.config.cache.enabled = TRUE   ## Use the renv build cache to speed up install times

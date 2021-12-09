@@ -31,9 +31,15 @@ jobs:
           apt-get update && apt-get install -y --no-install-recommends \
           libcurl4-openssl-dev \
           libssl-dev
+          
+      - name: Install packages from renv.lock (with cache)
+        if: ${{ !env.ACT }}  ## Doesn't work locally with ACT
+        uses: r-lib/actions/setup-renv@v1
+        with:
+          cache-version: 1
 
-
-      - name: Run targets workflow
+      - name: Install packages from renv.lock (local, no cache)
+        if: ${{ env.ACT }}  ## Only locally with ACT
         run: |
           renv::restore()
         shell: Rscript {0}

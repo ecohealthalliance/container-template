@@ -40,4 +40,9 @@ jobs:
         run: |
           targets::tar_make()
         shell: Rscript {0}
+        
+      - name: On failure, launch a temporary interactive debugging session
+        uses: mxschmitt/action-tmate@v3
+        if: ${{ failure() }}
+        timeout-minutes: 15
       

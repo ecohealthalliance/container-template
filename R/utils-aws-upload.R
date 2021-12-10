@@ -25,6 +25,10 @@ aws_s3_upload <- function(path, bucket, key = basename(path), prefix = "",
     if (error) stop(msg) else warning(msg)
   }
   
+  if (length(path) > 1) {
+    return(Reduce(c, lapply(path, aws_s3_upload), list()))
+  }
+  
   if (!file.exists(path)) {
     if (error) {
       stop("File not found.")

@@ -26,7 +26,12 @@ aws_s3_upload <- function(path, bucket, key = basename(path), prefix = "",
   }
   
   if (length(path) > 1) {
-    return(Reduce(c, lapply(path, aws_s3_upload), list()))
+    stopifnot(length(path) == length(key))
+    out <- mapply(aws_s3_upload, path = path, key = key,
+             MoreArgs = list(bucket = bucket, prefix = prefix, check = check, error = error),
+             SIMPLIFY = FALSE)
+    return(Reduce(c, unname(out), list()))
+                 
   }
   
   if (!file.exists(path)) {

@@ -66,7 +66,9 @@ deploy_targets <- tar_plan(
   ## This is a placeholder for any targets that are meant to deploy reports or
   ## any outputs externally e.g., website, Google Cloud Storage, Amazon Web
   ## Services buckets, etc. Delete or keep empty if you will not perform any
-  ## deployments
+  ## deployments. The aws_s3_upload function requires AWS credentials to be loaded
+  ## but will print a warning and do nothing if not
+  uploaded_report = aws_s3_upload(example_report, bucket = Sys.getenv("AWS_BUCKET"))
 )
 
 # List targets -----------------------------------------------------------------

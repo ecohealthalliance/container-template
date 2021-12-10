@@ -1,6 +1,6 @@
 #' Upload files or folders to AWS
 #'
-#' @param path The path to the file or folder to be uploaded
+#' @param path The path to the file(s) or folder(s) to be uploaded
 #' @param bucket The name of the bucket to be uploaded to
 #' @param key The key or name for the file or folder to take in the bucket.
 #'   Should end with "/" for folders. Use "" to upload files in folder without
@@ -10,7 +10,8 @@
 #' @param check Whether to check if the exact file already exists in the bucket
 #'   and skip uploading. Defaults to TRUE
 #' @param error Whether error out if the file is missing, folder is empty, or
-#'   system environment variables are missing
+#'   system environment variables are missing. Otherwise a message will print
+#'   but an empty list will be returned.
 #'
 #' @return A list, each element being having the key and etag (hash) of uploaded
 #'   files
@@ -22,16 +23,21 @@ aws_s3_upload <- function(path, bucket, key = basename(path), prefix = "",
       "AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY`, `AWS_REGION` environment
        variables must all be set to upload to AWS, probably in the .env file"
     )
-    if (error) stop(msg) else warning(msg)
+    if (error) {
+      stop(msg)
+    } else {
+      warning(msg)
+      return(list())
+    }
   }
   
   if (length(path) > 1) {
     stopifnot(length(path) == length(key))
     out <- mapply(aws_s3_upload, path = path, key = key,
-             MoreArgs = list(bucket = bucket, prefix = prefix, check = check, error = error),
-             SIMPLIFY = FALSE)
+                  MoreArgs = list(bucket = bucket, prefix = prefix, check = check, error = error),
+                  SIMPLIFY = FALSE)
     return(Reduce(c, unname(out), list()))
-                 
+    
   }
   
   if (!file.exists(path)) {

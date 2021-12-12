@@ -1,3 +1,10 @@
+# Use the local user's .Rprofile when interative.
+# Good for keeping local preferences, but not always reproducible.
+user_rprof <- Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE))
+if(interactive() && file.exists(user_rprof)) {
+  source(user_rprof)
+}
+
 if (file.exists(".env")) {
   try(readRenviron(".env"), silent = TRUE)
 }
@@ -11,6 +18,8 @@ if (Sys.info()[['sysname']] %in% c('Linux', 'Windows')) {
           pkgType = "both")
   # options(renv.config.mran.enabled = TRUE) ## TRUE by default
 }
+
+
 
 options(
   renv.config.repos.override = getOption("repos"),

@@ -12,6 +12,9 @@ library(tidyverse)
 library(here)
 library(knitr)
 library(rmarkdown)
+library(paws)
+library(tflow)
+library(fnmate)
 
 ################################################################################
 #

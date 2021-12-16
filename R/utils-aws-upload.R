@@ -49,7 +49,7 @@ aws_s3_upload <- function(path, bucket, key = basename(path), prefix = "",
     }
   }
   
-  svc <- s3()
+  svc <- paws::s3()
   if (file.exists(path) && !dir.exists(path)) {
     out <- list(aws_s3_upload_single(path, paste0(key, prefix), bucket, check, svc))
   } else if (file.exists(path) && dir.exists(path)) {
@@ -82,7 +82,7 @@ aws_s3_upload_single <- function(path, key = basename(path), bucket,
   if (check) {
     local_hash <- paste0('"', tools::md5sum(path), '"')
     s3_obj <- svc$list_objects_v2(Bucket = bucket, Prefix = key)$Contents |>
-      keep(~ .x$Key == key) |>
+      purrr::keep(~ .x$Key == key) |>
       unlist(FALSE)
     
     if (!is.null(s3_obj) && s3_obj$ETag == local_hash) {

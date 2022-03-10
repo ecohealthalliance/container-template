@@ -79,7 +79,7 @@ deploy_targets <- tar_plan(
   #   containerTemplateUtils::send_email_update(
   #     to = strsplit(Sys.getenv("EMAIL_RECIPIENTS"),";")[[1]],
   #     from = Sys.getenv("EMAIL_SENDER"),
-  #     project_name = "Rift Valley 2",
+  #     project_name = "My Project",
   #     attach = TRUE
   #   )
 )

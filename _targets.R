@@ -69,12 +69,19 @@ deploy_targets <- tar_plan(
   ## deployments. The aws_s3_upload function requires AWS credentials to be loaded
   ## but will print a warning and do nothing if not
   
-  # html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
-  #                                                     pattern = "\\.html$"),
-  # uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
-  #                                                       bucket = Sys.getenv("AWS_BUCKET"),
-  #                                                       error = TRUE,
-  #                                                       file_type = "html")
+  html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
+                                                      pattern = "\\.html$"),
+  uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
+                                                        bucket = Sys.getenv("AWS_BUCKET"),
+                                                        error = FALSE,
+                                                        file_type = "html"),
+  # email_updates= 
+  #   containerTemplateUtils::send_email_update(
+  #     to = strsplit(Sys.getenv("EMAIL_RECIPIENTS"),";")[[1]],
+  #     from = Sys.getenv("EMAIL_SENDER"),
+  #     project_name = "Rift Valley 2",
+  #     attach = TRUE
+  #   )
 )
 
 # List targets -----------------------------------------------------------------

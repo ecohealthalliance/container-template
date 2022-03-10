@@ -296,21 +296,17 @@ changes to GitHub, you will then have to add the symmetric key to your
 GitHub repository as a secret.
 
 First, generate a symmetric key by running this in your project
-directory.
+directory. This key can be regenerated at any time so there is no need
+keep it. 
 
 ``` bash
-git-crypt export-key git_crypt_key.key
+# export key to tmp folder; convert it to base64 and display the key; then delete it
+git-crypt export-key /tmp/key; base64 -i /tmp/key; rm /tmp/key
 ```
 
-`git_crypt_key.key` can now be used to decrypt the repository, and you
+The key can now be used to decrypt the repository, and you
 can provide it to GitHub Actions as a secret environment variable (see
-<https://docs.github.com/en/actions/security-guides/encrypted-secrets>).
-However, since it is binary data, you’ll need to convert it to base64
-first. So run something like:
+<https://docs.github.com/en/actions/security-guides/encrypted-secrets>). 
+Add it to GitHub’s secret environment variable field as `GIT_CRYPT_KEY64`.
 
-``` bash
-cat git_crypt_key.key | base64 | pbcopy
-```
 
-to convert this file to base64 data, then paste it in GitHub’s secret
-environment variable field as `GIT_CRYPT_KEY64`.

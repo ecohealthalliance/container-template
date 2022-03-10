@@ -15,6 +15,8 @@ library(rmarkdown)
 library(paws)
 library(tflow)
 library(fnmate)
+library(remotes)
+library(containerTemplateUtils) 
 
 ################################################################################
 #

@@ -5,6 +5,9 @@ on:
     branches:
       - main
       - master
+      - fix/*
+      - feature/*
+      - enhancement/*
   pull_request:
     branches:
       - main

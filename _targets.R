@@ -68,7 +68,13 @@ deploy_targets <- tar_plan(
   ## Services buckets, etc. Delete or keep empty if you will not perform any
   ## deployments. The aws_s3_upload function requires AWS credentials to be loaded
   ## but will print a warning and do nothing if not
-  uploaded_report = aws_s3_upload(example_report, bucket = Sys.getenv("AWS_BUCKET"))
+  
+  html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
+                                                      pattern = "\\.html$"),
+  uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
+                                                        bucket = Sys.getenv("AWS_BUCKET"),
+                                                        error = TRUE,
+                                                        file_type = "html")
 )
 
 # List targets -----------------------------------------------------------------

@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.2",
+    "Version": "4.1.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -172,6 +172,13 @@
       "Repository": "CRAN",
       "Hash": "9fe98599ca456d6552421db0d6772d8f"
     },
+    "blastula": {
+      "Package": "blastula",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1f45952e8aadddb043afb988b988dd52"
+    },
     "blob": {
       "Package": "blob",
       "Version": "1.2.2",
@@ -290,6 +297,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "8225311a3d9cf63a74917bfa8167d868"
+    },
+    "containerTemplateUtils": {
+      "Package": "containerTemplateUtils",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "containerTemplateUtils",
+      "RemoteUsername": "ecohealthalliance",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "ecc8abcb7ad626551312dae13f303e675cd83b60",
+      "Hash": "e6174fa352efb0472243aaea47f35b2d"
     },
     "cpp11": {
       "Package": "cpp11",
@@ -484,6 +503,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "3a3f29a74f8bd85ed8d53ab039b18bcd"
+    },
+    "getPass": {
+      "Package": "getPass",
+      "Version": "0.2-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "07a91f99e56951818ab911366db77700"
     },
     "ggplot2": {
       "Package": "ggplot2",
@@ -1091,6 +1117,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "76c9e04c712a05848ae7a23d2f170a40"
+    },
+    "remotes": {
+      "Package": "remotes",
+      "Version": "2.4.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "227045be9aee47e6dda9bb38ac870d67"
     },
     "renv": {
       "Package": "renv",

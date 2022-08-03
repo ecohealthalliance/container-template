@@ -17,8 +17,7 @@ options(
   renv.config.auto.snapshot = TRUE, ## Attempt to keep renv.lock updated automatically
   renv.config.rspm.enabled = TRUE, ## Use RStudio Package manager for pre-built package binaries
   renv.config.install.shortcuts = TRUE, ## Use the existing local library to fetch copies of packages for renv
-  renv.config.cache.enabled = TRUE,   ## Use the renv build cache to speed up install times
-  renv.config.install.transactional = FALSE
+  renv.config.cache.enabled = TRUE   ## Use the renv build cache to speed up install times
 )
 
 # Since RSPM does not provide Mac binaries, always install packages from CRAN

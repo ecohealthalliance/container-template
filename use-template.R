@@ -59,10 +59,11 @@ targets::tar_make()
 
 
 setwd(template_directory)
-file.remove('README.md')
-file.rename('README-template.Rmd', "README.Rmd")
+invisible(file.remove('README.md'))
+invisible(file.rename('README-template.Rmd', "README.Rmd"))
 
 cat(initalize_script, file = "initialize-template.R")
+system("Rscript -e 'R.version'")
 system("Rscript initialize-template.R")
 
 file.remove("initalize-template.R")

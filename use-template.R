@@ -48,15 +48,22 @@ for (pfile in projfiles) {
   cat(paste(updated_lines, collapse = "\n"), file = pfile)
 }
 
+
 initalize_script <- "
 renv::restore()
 renv::update()
+renv::clean()
+renv::snapshot()
+targets::tar_make()
 "
 
 
 setwd(template_directory)
+file.remove('README.md')
+file.rename('README-template.Rmd', "README.Rmd")
+
 cat(initalize_script, file = "initialize-template.R")
 system("Rscript initialize-template.R")
 
 file.remove("initalize-template.R")
-file.remove("use.template.R")
+file.remove("use-template.R")

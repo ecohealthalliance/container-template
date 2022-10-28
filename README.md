@@ -1,7 +1,20 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+# EHA Project Template
 
-# Containerised R workflow template
+## Quickstart
+
+Start a new project by running this in the R console:
+
+```r
+source("https://raw.githubusercontent.com/ecohealthalliance/container-template/download-script/use-template.R")
+
+```
+
+or this in the shell:
+
+```bash
+ Rscript -e "$(curl -q https://raw.githubusercontent.com/ecohealthalliance/container-template/download-script/use-template.R)"
+```
 
 <!-- badges: start -->
 

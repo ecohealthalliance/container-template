@@ -55,7 +55,7 @@ renv::update()
 
 
 setwd(template_directory)
-cat(initalize_script, "initialize-template.R")
+cat(initalize_script, file = "initialize-template.R")
 system("Rscript initialize-template.R")
 
 file.remove("initalize-template.R")

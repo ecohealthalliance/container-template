@@ -1,0 +1,27 @@
+# Identify file types for simpler scanning
+# ========================================
+*.Rdata              binary
+*.RData              binary
+*.rda                binary
+*.rdb                binary
+*.rds                binary
+*.fst                binary
+*.qs                 binary
+*.parquet            binary
+*.zip                binary
+*.gz                 binary
+*.bzip               binary
+*.xz                 binary
+*.png                binary
+*.jpg                binary
+_targets/objects/**  binary
+*.Rd                 text
+*.Rdx                binary
+*.Rmd	               text
+*.R  	               text
+*.Rproj              text
+*.Rmd                linguist-language=R
+
+## Encrypted Files
+.env filter=git-crypt diff=git-crypt
+auth/** filter=git-crypt diff=git-crypt

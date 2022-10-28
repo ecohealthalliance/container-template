@@ -12,10 +12,8 @@ library(tidyverse)
 library(here)
 library(knitr)
 library(rmarkdown)
-library(paws)
 library(tflow)
 library(fnmate)
-library(remotes)
 library(containerTemplateUtils) 
 
 ################################################################################
@@ -26,7 +24,3 @@ library(containerTemplateUtils)
 #' * Insert code here to load additional R packages that your workflow requires
 #
 ################################################################################
-
-library(zscorer)
-library(nipnTK)
-library(nutricheckr)

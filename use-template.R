@@ -48,5 +48,15 @@ for (pfile in projfiles) {
   cat(paste(updated_lines, collapse = "\n"), file = pfile)
 }
 
+initalize_script <- "
+renv::restore()
+renv::update()
+"
+
+
 setwd(template_directory)
+cat(initalize_script, "initialize-template.R")
 system("Rscript initialize-template.R")
+
+file.remove("initalize-template.R")
+file.remove("use.template.R")

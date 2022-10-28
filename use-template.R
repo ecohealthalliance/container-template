@@ -1,5 +1,17 @@
 #!/usr/bin/env Rscript
 
+read_input <- function(prompt) {
+  if (interactive()) {
+    out <- readline(prompt)
+  } else {
+    cat(prompt);
+    out <- readLines("stdin",n=1);
+    cat( "\n" )
+  }
+  out
+}
+
+
 temp_directory <- tempfile(pattern = "dir")
 working_directory <- getwd()
 dirname <- basename(working_directory)
@@ -13,12 +25,14 @@ download.file(
 unzip(zipfile, exdir = temp_directory)
 temp_template_directory <- list.files(temp_directory, full.names = TRUE)
 template_directory <- tempfile(pattern = "dir")
-file.rename(temp_template_directory, template_directory)
-file.remove(zipfile)
+invisible(file.rename(temp_template_directory, template_directory))
+invisible(file.remove(zipfile))
 
 
 name_prompt <- paste0("Enter project name (or press Enter to use current directory, '", dirname, "'): ")
-project_name <- readline(name_prompt)
+project_name <- read_input(name_prompt)
+
+message("Project name is ", project_name)
 
 projfiles <- list.files(template_directory, all.files = TRUE, full.names = TRUE, recursive = TRUE)
 

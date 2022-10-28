@@ -19,7 +19,7 @@ zipfile <- tempfile(fileext = ".zip")
 
 message("Downloding template...\n")
 download.file(
-  "https://github.com/ecohealthalliance/container-template/archive/refs/heads/main.zip",
+  "https://github.com/ecohealthalliance/container-template/archive/refs/heads/download-script.zip",
   quiet = TRUE,
   destfile = zipfile)
 unzip(zipfile, exdir = temp_directory)

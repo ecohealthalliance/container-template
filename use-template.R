@@ -51,7 +51,6 @@ for (pfile in projfiles) {
 
 initalize_script <- "
 renv::restore()
-renv::update()
 renv::clean()
 renv::snapshot()
 targets::tar_make()

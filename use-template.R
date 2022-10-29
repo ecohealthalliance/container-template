@@ -54,15 +54,22 @@ invisible(file.remove('README.md'))
 invisible(file.rename('README-template.Rmd', "README.Rmd"))
 
 system("Rscript -e 'invisible()'")
+org = "ecohealthalliance"
 
-initialize_script <- '
+initialize_script <- paste0('
 renv::restore()
+if(Sys.getenv("RSTUDIO", "0") == "1") {
 rstudio.prefs::use_rstudio_keyboard_shortcut(
   "Ctrl+Alt+F" = "fnmate::rs_fnmate",
   "Ctrl+Alt+L" = "targets::rstudio_addin_tar_load",
   "Ctrl+Alt+M" = "targets::tar_make"
 )
-targets::tar_make()'
+}
+targets::tar_make()
+gert::git_init()
+gert::git_add(".")
+gert::git_commit("Initial commit of project template")
+gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
 system(paste("Rscript -e '", initialize_script, "'"))
 
 
@@ -70,6 +77,7 @@ cleanup_script <- '
 renv::clean()
 renv::update()
 renv::snapshot()'
+
 system(paste("Rscript -e '", cleanup_script, "'"))
 
 file.remove("use-template.R")

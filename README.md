@@ -22,7 +22,7 @@ source("https://raw.githubusercontent.com/ecohealthalliance/container-template/d
 or this in the shell:
 
 ```bash
- Rscript -e "$(curl -q https://raw.githubusercontent.com/ecohealthalliance/container-template/download-script/use-template.R)"
+ Rscript -e "$(curl -s https://raw.githubusercontent.com/ecohealthalliance/container-template/download-script/use-template.R)"
 ```
 
 

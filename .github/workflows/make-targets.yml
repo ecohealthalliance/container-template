@@ -1,30 +1,21 @@
-name: container-workflow-template
+name: make-targets
 
+# By default this action runs only manually
 on:
-  push:
-    branches:
-      - main
-      - master
-      - fix/*
-      - feature/*
-      - enhancement/*
-  pull_request:
-    branches:
-      - main
-      - master
   workflow_dispatch:
     branches:
       - '*'
+# Alternately, for jobs such as updating dashboard, you can set a regular schedule
   #schedule:
   #  - cron: "0 8 * * *"
       
 jobs:
   container-workflow-template:
     runs-on: ubuntu-latest                                # Run on GitHub Actions runner
-    #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner
-    #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
+    #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner (permissions required)
+    #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner  (permissions required)
     container:
-      image: rocker/verse:4.1.2
+      image: rocker/verse:4.2.1
       
     steps:
     

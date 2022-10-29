@@ -1,96 +1,64 @@
-################################################################################
-#
-# Project build script
-#
-################################################################################
 
-# Load packages (in packages.R) and load project-specific functions in R folder
-suppressPackageStartupMessages(source("packages.R"))
-for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
+# ---- Load packages ----
+# Only list packages here that you expect to use in most of your targets or
+# in this script. Packages used only within certain targets are best
+# referred to with `::` syntax, or in the `tar_target(..., packages = "pkgname")`
+# argument. `_targets_packages.R` lists packages used interactively but not
+# in your workflow
+library(targets)
+library(tarchetypes)
+library(tidyverse)
 
-# Set build options ------------------------------------------------------------
+# Load all the functions in the `R/` directory
+targets::tar_source(files = "R") 
 
 
-# Groups of targets ------------------------------------------------------------
-
-## Data input
-data_input_targets <- tar_plan(
-  ## Example data input target/s; delete and replace with your own data input
-  ## targets
-  nutrition_data = zscorer::anthro2
+# ---- Options ----
+# By default we use the `qs` format for faster read/write of targets
+tar_option_set(
+  resources = tar_resources(
+    qs = tar_resources_qs(preset = "fast")),
+  format = "qs"
 )
 
 
-## Data processing
-data_processing_targets <- tar_plan(
-  ## Example data processing target/s; delete and replace with your own data
-  ## processing targets
-  nutrition_data_check = check_anthro_data(df = nutrition_data),
-  nutrition_data_issues = check_anthro_data(
-    df = nutrition_data, output = "check"
-  ),
-  nutrition_data_clean = nutrition_data_check |> filter(flag != 0)
+
+# ---- Targets Plan ----
+
+data_targets <- tar_plan(
 )
 
-
-## Analysis
 analysis_targets <- tar_plan(
-  ## Example analysis target/s; delete and replace with your own analysis
-  ## targets
-  wasting_recode = find_child_wasting(
-    df = nutrition_data_clean, index = "whz", zscore = "wfhz"
-  ),
-  wasting_prevalence = sum(wasting_recode[["wfhz"]], na.rm = TRUE) / nrow(wasting_recode)
 )
 
-## Outputs
-outputs_targets <- tar_plan(
-  ## This is a placeholder for any targets that produces outputs such as
-  ## tables of model outputs, plots, etc. Delete or keep empty if you will not
-  ## produce any of these types of outputs
+plot_targets <- tar_plan(
 )
 
-
-## Report
-report_targets <- tar_plan(
-  ## Example Rmarkdown report target/s; delete and replace with your own
-  ## Rmarkdown report target/s
-  tar_render(
-    example_report, path = "reports/example_report.Rmd", 
-    output_dir = "outputs", knit_root_dir = here::here()
-  )
+plot_file_targets <- tar_plan(
 )
 
-## Deploy targets
-deploy_targets <- tar_plan(
-  ## This is a placeholder for any targets that are meant to deploy reports or
-  ## any outputs externally e.g., website, Google Cloud Storage, Amazon Web
-  ## Services buckets, etc. Delete or keep empty if you will not perform any
-  ## deployments. The aws_s3_upload function requires AWS credentials to be loaded
-  ## but will print a warning and do nothing if not
+output_targets <- tar_plan(
+  # Make the plan a target so README updates when it is changed
+  tar_file(plan_targets, "_targets.R"), 
+  tar_render(readme, path = "README.Rmd"),
   
-  html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
-                                                      pattern = "\\.html$"),
-  uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
-                                                        bucket = Sys.getenv("AWS_BUCKET"),
-                                                        error = FALSE,
-                                                        file_type = "html"),
-  # email_updates= 
-  #   containerTemplateUtils::send_email_update(
-  #     to = strsplit(Sys.getenv("EMAIL_RECIPIENTS"),";")[[1]],
-  #     from = Sys.getenv("EMAIL_SENDER"),
-  #     project_name = "My Project",
-  #     attach = TRUE
-  #   )
+  # Render any reports
+  tar_render(report_template,
+             path = "reports/report-template.Rmd"),
+  
+  # Extract useful numbers from elsewhere in the workflow
+  summarized_quantities = summarize_quantities(),
+  
+  # Make a README in the outputs/ directory to view all figures
+  tar_target_raw("all_plot_files", parse(text = paste0("c(", paste(map_chr(plot_file_targets, \(x) x$settings$name), collapse = ", "), ")"))),
+  tar_render(outputs_readme, path = "outputs/README.Rmd", params = all_plot_files),
 )
 
-# List targets -----------------------------------------------------------------
-
+# ---- Final targets list  ----
 list(
-  data_input_targets,
-  data_processing_targets,
+  data_targets,
   analysis_targets,
-  outputs_targets,
-  report_targets,
-  deploy_targets
+  plot_targets,
+  plot_file_targets,
+  output_targets
 )

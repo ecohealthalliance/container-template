@@ -1,11 +1,4 @@
-######################## LOAD R PACKAGES #######################################
-
-################################################################################
-#
-#' R packages needed to run any/most {targets} workflows
-#
-################################################################################
-
+# List packages here that you expect to use in most of your target building
 library(targets)
 library(tarchetypes)
 library(tidyverse)

@@ -1,0 +1,21 @@
+---
+title: "An example Report"
+author: "EcoHealth Alliance"
+date: "Produced on `r Sys.Date()`"
+output:
+  html_document:
+    code_download: TRUE
+    self_contained: TRUE
+    toc: TRUE
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  warning = FALSE,
+  error = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "figures/"
+)
+```

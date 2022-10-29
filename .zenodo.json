@@ -1,0 +1,28 @@
+{
+  "title": "Title of Paper",
+  "license": "MIT",
+  "creators": [{
+    "name": "Name, Your",
+    "affiliation": "EcoHealth Alliance, New York, NY, USA",
+    "orcid": "0000-YOUR-ORCID-ID"
+  },{
+    "name": "Name, Collaborator A",
+    "affiliation": "EcoHealth Alliance, New York, NY, USA",
+    "orcid": "0000-YOUR-ORCID-ID"
+  },{
+    "name": "Name, Collaborator B",
+    "affiliation": "University of Freedonia",
+    "orcid": "0000-YOUR-ORCID-ID"
+  }],
+  "description": "This compendium includes the code, data, documentation, metadata and figure source files that accompany this research.",
+  "access_right": "open",
+  "related_identifiers": [{
+      "identifier": "10.1038/DOI-OF-PAPER-OR-PREPRINT",
+      "relation": "isSupplementTo",
+      "scheme": "doi"
+    }, {
+    "identifier": "http://github.com/ecohealthalliance/template-placeholder",
+    "relation": "isIdenticalTo",
+    "scheme": "url"
+  }]
+}

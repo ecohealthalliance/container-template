@@ -1,0 +1,12 @@
+name|type|parent|branches|progress
+nutrition_data|stem|nutrition_data|0|skipped
+nutrition_data_issues|stem|nutrition_data_issues|0|started
+nutrition_data_issues|stem|nutrition_data_issues|0|built
+nutrition_data_check|stem|nutrition_data_check|0|started
+nutrition_data_check|stem|nutrition_data_check|0|built
+nutrition_data_clean|stem|nutrition_data_clean|0|skipped
+wasting_recode|stem|wasting_recode|0|skipped
+wasting_prevalence|stem|wasting_prevalence|0|skipped
+example_report|stem|example_report|0|skipped
+uploaded_report|stem|uploaded_report|0|started
+uploaded_report|stem|uploaded_report|0|built

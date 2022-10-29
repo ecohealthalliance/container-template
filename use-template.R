@@ -49,21 +49,27 @@ for (pfile in projfiles) {
 }
 
 
-initalize_script <- "
-renv::restore()
-renv::clean()
-renv::snapshot()
-targets::tar_make()
-"
-
-
 setwd(template_directory)
 invisible(file.remove('README.md'))
 invisible(file.rename('README-template.Rmd', "README.Rmd"))
 
-cat(initalize_script, file = "initialize-template.R")
-system("Rscript -e 'R.version'")
-system("Rscript initialize-template.R")
+system("Rscript -e 'invisible()'")
 
-file.remove("initalize-template.R")
+initialize_script <- '
+renv::restore()
+rstudio.prefs::use_rstudio_keyboard_shortcut(
+  "Ctrl+Alt+F" = "fnmate::rs_fnmate",
+  "Ctrl+Alt+L" = "targets::rstudio_addin_tar_load",
+  "Ctrl+Alt+M" = "targets::tar_make"
+)
+targets::tar_make()'
+system(paste("Rscript -e '", initialize_script, "'"))
+
+
+cleanup_script <- '
+renv::clean()
+renv::update()
+renv::snapshot()'
+system(paste("Rscript -e '", cleanup_script, "'"))
+
 file.remove("use-template.R")

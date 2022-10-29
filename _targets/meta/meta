@@ -1,0 +1,21 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
+nutrition_data|stem|36484e5d640109ef|40bcd732128fc1e9|c3b5fc02cdc369c1|486710335||t18971.8540559645s|530fcc6c1135ce94|4636|rds|vector|||0.003||
+nutrition_data_clean|stem|fcdb61ef4163e12b|97d63c8c0690699b|5271fbe4f971d373|619464695||t18971.8543018447s|1f9a34c88f53017d|3660|rds|vector|||0.008||
+wasting_recode|stem|f8b3c8d8d3e4d763|14c678b6d4e245c1|4f4b95be330aba76|-583764828||t18971.8543022514s|d778b2938f7c0a1c|3829|rds|vector|||0.008||
+wasting_prevalence|stem|df47aac55a4bb5b4|a46b60513c27342f|9f94f956ece37e75|1641230917||t18971.8543025244s|7e02ad38317bcde4|55|rds|vector|||0.002||
+example_report|stem|a7668a73a2ad8b03|1584abca98a6e5e3|62c71f59fc6c5161|2101924986|outputs/example_report.html*reports/example_report.Rmd|t18971.8543359439s|a52a608bd529e525|658292|file|vector|||2.952||
+data_input_targets|object|79954645aca38b3f||||||||||||||
+aws_s3_upload_single|function|4e608cbdf9601669||||||||||||||
+deploy_targets|object|5ffe6afca81d9674||||||||||||||
+outputs_targets|object|1eb1bc8d77111ded||||||||||||||
+report_targets|object|1aa074405a606dd5||||||||||||||
+.Random.seed|object|1b1cee2bbe12e2a8||||||||||||||
+data_processing_targets|object|776a77df6dc4dd9d||||||||||||||
+f|object|d90c53d1fb02a168||||||||||||||
+analysis_targets|object|65f66dd440d4be55||||||||||||||
+user_rprof|object|7bbb6f5be9480d28||||||||||||||
+check_anthro_data|function|e4ad3b81d74a5a0b||||||||||||||
+aws_s3_upload|function|bd98cadba22dcfb5||||||||||||||
+nutrition_data_issues|stem|fcdb61ef4163e12b|8a0a799f0163e3f1|aa1b4eeff73015e8|2087054520||t18971.8685645934s|1f9a34c88f53017d|3660|rds|vector|||11.103||
+nutrition_data_check|stem|13ce0feee3fba6df|3e72916aaeb63cd4|aa1b4eeff73015e8|1660387930||t18971.8687078215s|f5557e92d97c04fe|12878|rds|vector|||12.347||
+uploaded_report|stem|3a3e37142b7f1586|015cbeba36d527e0|988c5ab80bc20118|-1668699945||t18971.8687098074s|6efc4bfe9d27bd5a|46|rds|vector|||0.111|AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION environment       variables must all be set to upload to AWS, probably in the .env file|

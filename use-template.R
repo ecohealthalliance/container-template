@@ -67,7 +67,7 @@ invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
 response <- gh::gh("POST orgs/', org, '/repos", name = "', project_name, '", type = "private")')
-system(paste("RENV_VERBOSE=0 Rscript -e '", initialize_script, "'"))
+system(paste("RENV_VERBOSE=FALSE Rscript -e '", initialize_script, "'"))
 
 
 cleanup_script <- '
@@ -75,6 +75,6 @@ renv::clean()
 renv::update()
 renv::snapshot()'
 
-system(paste("RENV_VERBOSE=0 Rscript -e '", cleanup_script, "'"))
+system(paste("RENV_VERBOSE=FALSE Rscript -e '", cleanup_script, "'"))
 
 file.remove("use-template.R")

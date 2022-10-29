@@ -13,6 +13,10 @@ options(
   renv.config.cache.symlinks = TRUE,  ## Keep full copies of packages locally than symlinks to make the project portable in/out of containers
   renv.config.install.transactional = FALSE,
   renv.config.synchronized.check = FALSE,
+  renv.verbose = FALSE,
+  renv.config.install.verbose = FALSE,
+  
+  tidyverse.quiet = TRUE,
   
   mc.cores = min(parallel::detectCores(), 4)
   

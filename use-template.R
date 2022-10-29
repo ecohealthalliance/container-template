@@ -57,7 +57,6 @@ system("Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
-options(tidyverse.quiet=TRUE)
 message("• Bootstrapping {renv} and installing packages")
 renv::restore()
 message("Testing `targets` pipeline")
@@ -66,8 +65,8 @@ message("• Setting up Git Repository")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
-response <- gh::gh("POST orgs/', org, '/repos", name = "', project_name, '", type = "private")')
-system(paste("RENV_CONFIG_INSTALL_VERBOSE=FALSE Rscript -e '", initialize_script, "'"))
+#response <- gh::gh("POST /orgs/', org, '/repos", name = "', project_name, '", type = "private")')
+system(paste("Rscript -e '", initialize_script, "'"))
 
 
 cleanup_script <- '
@@ -75,6 +74,6 @@ renv::clean()
 renv::update()
 renv::snapshot()'
 
-system(paste("RENV_CONFIG_INSTALL_VERBOSE=FALSE Rscript -e '", cleanup_script, "'"))
+system(paste("Rscript -e '", cleanup_script, "'"))
 
 file.remove("use-template.R")

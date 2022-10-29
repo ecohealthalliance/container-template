@@ -58,21 +58,14 @@ org = "ecohealthalliance"
 
 initialize_script <- paste0('
 message("Installing packages")
-suppressMessages(renv::restore())
-if(Sys.getenv("RSTUDIO", "0") == "1") {
-rstudio.prefs::use_rstudio_keyboard_shortcut(
-  "Ctrl+Alt+F" = "fnmate::rs_fnmate",
-  "Ctrl+Alt+L" = "targets::rstudio_addin_tar_load",
-  "Ctrl+Alt+M" = "targets::tar_make"
-)
-}
+invisible(capture.output((renv::restore()))
 message("Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
 message("Setting up Git Repository")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
-gh::gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
+invisible(gh::gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private"))')
 system(paste("Rscript -e '", initialize_script, "'"))
 
 

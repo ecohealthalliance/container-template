@@ -59,7 +59,7 @@ org = "ecohealthalliance"
 initialize_script <- paste0('
 options(tidyverse.quiet=TRUE)
 message("• Bootstrapping {renv} and installing packages")
-invisible(capture.output((renv::restore())))
+renv::restore()
 message("Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
 message("• Setting up Git Repository")

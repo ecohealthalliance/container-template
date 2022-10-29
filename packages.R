@@ -7,6 +7,8 @@ library(knitr)
 library(rmarkdown)
 library(tflow)
 library(fnmate)
+library(gert)
+library(gh)
 library(containerTemplateUtils) 
 
 ################################################################################

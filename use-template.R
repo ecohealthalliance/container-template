@@ -11,6 +11,8 @@ read_input <- function(prompt) {
   out
 }
 
+name_prompt <- paste0("Enter project name (or press Enter to use current directory, '", dirname, "'): ")
+project_name <- read_input(name_prompt)
 
 temp_directory <- tempfile(pattern = "dir")
 working_directory <- getwd()
@@ -29,12 +31,9 @@ invisible(file.rename(temp_template_directory, template_directory))
 invisible(file.remove(zipfile))
 
 
-name_prompt <- paste0("Enter project name (or press Enter to use current directory, '", dirname, "'): ")
-project_name <- read_input(name_prompt)
-
 projfiles <- list.files(template_directory, all.files = TRUE, full.names = TRUE, recursive = TRUE)
 
-message("• Modifying template to use '", project_name, "' as name")
+message("• Modifying template to use '", project_name, "' as name...")
 for (pfile in projfiles) {
   # Rename any files with the template name to the project name
   if(grepl("container-template", pfile)) {
@@ -57,11 +56,22 @@ system("RENV_VERBOSE=FALSE Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
-message("• Bootstrapping {renv} and installing packages")
+read_input <- function(prompt) {
+  if (interactive()) {
+    out <- readline(prompt)
+  } else {
+    cat(prompt);
+    out <- readLines("stdin",n=1);
+    cat( "\n" )
+  }
+  out
+}
+test <- read_input("test: ")
+message("• Bootstrapping {renv} and installing packages...")
 renv::restore()
-message("• Testing `targets` pipeline")
+message("• Running `targets` pipeline...")
 targets::tar_make(reporter = "silent")
-message("• Setting up Git Repository")
+message("• Setting up Git Repository...")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
@@ -70,7 +80,9 @@ system(paste("Rscript -e '", initialize_script, "'"))
 
 
 cleanup_script <- '
+message("• Cleaning up unneeded packages...")
 renv::clean()
+message("• Updating packages...")
 renv::update()
 renv::snapshot()'
 

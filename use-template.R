@@ -57,7 +57,8 @@ system("Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
-renv::restore()
+message("Installing packages")
+suppressMessages(renv::restore())
 if(Sys.getenv("RSTUDIO", "0") == "1") {
 rstudio.prefs::use_rstudio_keyboard_shortcut(
   "Ctrl+Alt+F" = "fnmate::rs_fnmate",
@@ -65,10 +66,12 @@ rstudio.prefs::use_rstudio_keyboard_shortcut(
   "Ctrl+Alt+M" = "targets::tar_make"
 )
 }
-targets::tar_make()
-gert::git_init()
-gert::git_add(".")
-gert::git_commit("Initial commit of project template")
+message("Testing `targets` pipeline")
+targets::tar_make(reporter = "silent")
+message("Setting up Git Repository")
+invisible(gert::git_init())
+invisible(gert::git_add("."))
+invisible(gert::git_commit("Initial commit of project template"))
 gh::gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
 system(paste("Rscript -e '", initialize_script, "'"))
 

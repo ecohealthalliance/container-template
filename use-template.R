@@ -13,10 +13,10 @@ read_input <- function(prompt) {
 
 temp_directory <- tempfile(pattern = "dir")
 working_directory <- getwd()
-dirname <- basename(working_directory)
+dir <- basename(working_directory)
 zipfile <- tempfile(fileext = ".zip")
 
-name_prompt <- paste0("Enter project name (or press Enter to use current directory, '", dirname, "'): ")
+name_prompt <- paste0("Enter project name (or press Enter to use current directory, '", dir, "'): ")
 project_name <- read_input(name_prompt)
 
 message("Downloding template...\n")

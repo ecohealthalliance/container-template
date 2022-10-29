@@ -65,7 +65,7 @@ message("Setting up Git Repository")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
-invisible(gh::gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private"))')
+response <- gh::gh("POST orgs/', org, '/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
 system(paste("Rscript -e '", initialize_script, "'"))
 
 

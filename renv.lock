@@ -47,12 +47,36 @@
       "Hash": "470851b6d5d0ac559e9d01bb352b4021",
       "Requirements": []
     },
+    "RApiSerialize": {
+      "Package": "RApiSerialize",
+      "Version": "0.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d8a79c95f553670ceffbd190815bbfce",
+      "Requirements": []
+    },
     "RColorBrewer": {
       "Package": "RColorBrewer",
       "Version": "1.1-3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "45f0398006e83a5b10b72a90663d8d8c",
+      "Requirements": []
+    },
+    "Rcpp": {
+      "Package": "Rcpp",
+      "Version": "1.0.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e9c08b94391e9f3f97355841229124f2",
+      "Requirements": []
+    },
+    "RcppParallel": {
+      "Package": "RcppParallel",
+      "Version": "5.1.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f3e94e34ff656a7c8336ce01207bc2b8",
       "Requirements": []
     },
     "askpass": {
@@ -916,6 +940,18 @@
         "rlang"
       ]
     },
+    "qs": {
+      "Package": "qs",
+      "Version": "0.25.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ffc0d1d65ca061b04ab23e790828d897",
+      "Requirements": [
+        "RApiSerialize",
+        "Rcpp",
+        "stringfish"
+      ]
+    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -1113,6 +1149,17 @@
       "Requirements": [
         "R6",
         "stringr"
+      ]
+    },
+    "stringfish": {
+      "Package": "stringfish",
+      "Version": "0.15.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d860d083dadb4117e305b6451bb2dc8b",
+      "Requirements": [
+        "Rcpp",
+        "RcppParallel"
       ]
     },
     "stringi": {

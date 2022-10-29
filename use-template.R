@@ -34,7 +34,7 @@ project_name <- read_input(name_prompt)
 
 projfiles <- list.files(template_directory, all.files = TRUE, full.names = TRUE, recursive = TRUE)
 
-message("Modifying template to use '", project_name, "' as name")
+message("• Modifying template to use '", project_name, "' as name")
 for (pfile in projfiles) {
   # Rename any files with the template name to the project name
   if(grepl("container-template", pfile)) {
@@ -57,16 +57,16 @@ system("Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
-message("Installing packages")
+message("• Installing packages")
 invisible(capture.output((renv::restore())))
 message("Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
-message("Setting up Git Repository")
+message("• Setting up Git Repository")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
 response <- gh::gh("POST orgs/', org, '/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
-system(paste("Rscript --renv.verbase=FALSE -e '", initialize_script, "'"))
+system(paste("Rscript --renv.verbose=FALSE -e '", initialize_script, "'"))
 
 
 cleanup_script <- '

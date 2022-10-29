@@ -65,8 +65,8 @@ message("• Setting up Git Repository")
 invisible(gert::git_init())
 invisible(gert::git_add("."))
 invisible(gert::git_commit("Initial commit of project template"))
-response <- gh::gh("POST orgs/', org, '/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
-system(paste("Rscript --renv.verbose=FALSE -e '", initialize_script, "'"))
+response <- gh::gh("POST orgs/', org, '/repos", name = "', project_name, '", type = "private")')
+system(paste("RENV_VERBOSE=0 Rscript -e '", initialize_script, "'"))
 
 
 cleanup_script <- '

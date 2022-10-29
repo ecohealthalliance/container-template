@@ -1,0 +1,37 @@
+---
+output: 
+  github_document:
+    html_preview: true
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(targets)
+tar_load(summarized_quantities)
+```
+
+# Summarized Quantities
+
+<details>
+
+<summary>
+Here we extract all quantities reported in the text of the paper. Click to expand
+</summary>
+
+```{r, echo = FALSE}
+knitr::kable(tibble::tibble(
+  Quantity = names(summarized_quantities),
+  Value = unlist(summarized_quantities)
+), align = "lr")
+```
+
+</details>
+
+
+# Figures
+
+```{r, results = "asis", echo = FALSE}
+files = list.files(here::here("outputs"), pattern = "png$")
+cat(paste0("## ", files, "\n\n![](", files, ")"), sep = "\n\n")
+```

@@ -53,13 +53,13 @@ setwd(template_directory)
 invisible(file.remove('README.md'))
 invisible(file.rename('README-template.Rmd', "README.Rmd"))
 
-system("Rscript -e 'invisible()'")
+system("RENV_VERBOSE=FALSE Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
 message("• Bootstrapping {renv} and installing packages")
 renv::restore()
-message("Testing `targets` pipeline")
+message("• Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
 message("• Setting up Git Repository")
 invisible(gert::git_init())

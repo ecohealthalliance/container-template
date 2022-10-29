@@ -69,7 +69,7 @@ targets::tar_make()
 gert::git_init()
 gert::git_add(".")
 gert::git_commit("Initial commit of project template")
-gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
+gh::gh("POST /user/repos", ort = "', org, '", name = "', project_name, '", type = "private")')
 system(paste("Rscript -e '", initialize_script, "'"))
 
 

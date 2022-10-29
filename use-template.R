@@ -57,7 +57,8 @@ system("Rscript -e 'invisible()'")
 org = "ecohealthalliance"
 
 initialize_script <- paste0('
-message("• Installing packages")
+options(tidyverse.quiet=TRUE)
+message("• Bootstrapping {renv} and installing packages")
 invisible(capture.output((renv::restore())))
 message("Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
@@ -74,6 +75,6 @@ renv::clean()
 renv::update()
 renv::snapshot()'
 
-system(paste("Rscript -e '", cleanup_script, "'"))
+system(paste("RENV_VERBOSE=0 Rscript -e '", cleanup_script, "'"))
 
 file.remove("use-template.R")

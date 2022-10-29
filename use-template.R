@@ -43,7 +43,7 @@ for (pfile in projfiles) {
     pfile <- new_name
   }
   # Replace any text of placeholders with the project name
-  lines <- readLines(pfile)
+  lines <- readLines(pfile, warn = FALSE)
   updated_lines <- gsub("container-template", project_name, lines, fixed = TRUE)
   cat(paste(updated_lines, collapse = "\n"), file = pfile)
 }

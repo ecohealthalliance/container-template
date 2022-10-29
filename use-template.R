@@ -58,7 +58,7 @@ org = "ecohealthalliance"
 
 initialize_script <- paste0('
 message("Installing packages")
-invisible(capture.output((renv::restore()))
+invisible(capture.output((renv::restore())))
 message("Testing `targets` pipeline")
 targets::tar_make(reporter = "silent")
 message("Setting up Git Repository")

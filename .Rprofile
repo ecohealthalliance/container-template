@@ -1,51 +1,46 @@
+# Use the local user's .Rprofile when interactive.
+# Good for keeping local preferences and shortcuts, but not always reproducible.
+local({
+  user_rprof <- Sys.getenv("R_PROFILE_USER", file.path(Sys.getenv("HOME"), ".Rprofile"))
+  if(interactive() && file.exists(user_rprof)) source(user_rprof)
+})
+
+# Load .env environment variables
 if (file.exists(".env")) {
-  try(readRenviron(".env"))
+  if(isTRUE(suppressWarnings(readBin(".env", "character", 2))[2] == "GITCRYPT")) {
+    message(".env file is encrypted, not reading. Use git-crypt unlock to decrypt")
+  } else {
+    try(readRenviron(".env"))
+  }
 }
 
 options(
   repos = c(RSPM = "https://packagemanager.rstudio.com/all/latest",
             CRAN = "https://cran.rstudio.com/"),
-  
   renv.config.auto.snapshot = TRUE, ## Attempt to keep renv.lock updated automatically
-  renv.config.rspm.enabled = TRUE, ## Use RStudio Package manager for pre-built package binaries
-  renv.config.install.shortcuts = TRUE, ## Use the existing local library to fetch copies of packages for renv
-  renv.config.cache.enabled = TRUE,   ## Use the renv build cache to speed up install times
-  renv.config.cache.symlinks = TRUE,  ## Keep full copies of packages locally than symlinks to make the project portable in/out of containers
-  renv.config.install.transactional = FALSE,
-  renv.config.synchronized.check = FALSE,
-  renv.verbose = FALSE,
-  renv.config.install.verbose = FALSE,
-  
-  tidyverse.quiet = TRUE,
-  
-  mc.cores = min(parallel::detectCores(), 4)
-  
+  tidyverse.quiet = TRUE
 )
 
-if (!Sys.getenv("USE_CAPSULE") != "") {
-  if (file.exists("renv/activate.R")) {
-    source("renv/activate.R")
-  } else {
-    message("No renv/activate.R")
-  }
-} else {
-  message("Skipping renv load. Use {capsule} commands.")
+# Since RSPM does not provide Mac binaries, always install packages from CRAN
+# on mac or windows, even if renv.lock specifies they came from RSPM
+if (Sys.info()[["sysname"]] %in% c("Darwin", "Windows")) {
+  options(renv.config.repos.override = c(
+    CRAN = "https://cran.rstudio.com/",
+    INLA = "https://inla.r-inla-download.org/R/testing"))
+} else if (Sys.info()[["sysname"]] == "Linux") {
+  options(renv.config.repos.override = c(
+    RSPM = "https://packagemanager.rstudio.com/all/latest",
+    INLA = "https://inla.r-inla-download.org/R/testing"))
 }
 
-# Use the local user's .Rprofile when interactive.
-# Good for keeping local preferences, but not always reproducible.
-user_rprof <- Sys.getenv("R_PROFILE_USER", normalizePath("~/.Rprofile", mustWork = FALSE))
-if(interactive() && file.exists(user_rprof)) {
-  source(user_rprof)
-}
-rm(user_rprof)
+# Load the local library
+if(file.exists("renv/activate.R")) source("renv/activate.R")
 
-# If project packages have conflicts define them here
+# If project packages have conflicts define them here, we start with common ones
 if(requireNamespace("conflicted", quietly = TRUE)) {
   conflicted::conflict_prefer("filter", "dplyr", quiet = TRUE)
   conflicted::conflict_prefer("count", "dplyr", quiet = TRUE)
   conflicted::conflict_prefer("select", "dplyr", quiet = TRUE)
-  conflicted::conflict_prefer("geom_rug", "ggplot2", quiet = TRUE)
   conflicted::conflict_prefer("set_names", "magrittr", quiet = TRUE)
   conflicted::conflict_prefer("View", "utils", quiet = TRUE)
 }

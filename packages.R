@@ -17,6 +17,7 @@ library(tflow)
 library(fnmate)
 library(remotes)
 library(containerTemplateUtils) 
+library(dotenv)
 
 ################################################################################
 #
@@ -27,6 +28,5 @@ library(containerTemplateUtils)
 #
 ################################################################################
 
-library(zscorer)
-library(nipnTK)
-library(nutricheckr)
+library(usethis)
+library(kableExtra)

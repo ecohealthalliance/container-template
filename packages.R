@@ -13,10 +13,7 @@ library(here)
 library(knitr)
 library(rmarkdown)
 library(paws)
-library(tflow)
-library(fnmate)
-library(remotes)
-library(containerTemplateUtils) 
+library(conflicted)
 
 ################################################################################
 #
@@ -27,6 +24,9 @@ library(containerTemplateUtils)
 #
 ################################################################################
 
-library(zscorer)
-library(nipnTK)
-library(nutricheckr)
+library(tflow)
+library(fnmate)
+library(containerTemplateUtils) 
+library(dotenv)
+library(usethis)
+library(kableExtra)

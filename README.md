@@ -15,7 +15,47 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 This is a template repository of a containerised R workflow built on the
 `targets` framework, made portable using `renv`, and ran manually or
-automatically using `GitHub Actions`.
+automatically using `GitHub Actions`. To use this template click on the
+“use this template button” and then select create a new repository.
+
+Check out the
+[`containerTemplateUtils`](https://github.com/ecohealthalliance/containerTemplateUtils)
+package for handling common tasks related to this repo (sending emails,
+uploading files to AWS, etc. )
+
+Note that `git-crypt` is not part of the template repo. See the [EHA M&A
+handbook](https://ecohealthalliance.github.io/eha-ma-handbook/16-encryption.html#set-up-encryption-for-a-repo-that-did-not-previously-use-git-crypt)
+for how to add git-crypt.
+
+Follow the links for more information about:
+
+- [`targets`](https://ecohealthalliance.github.io/eha-ma-handbook/3-projects.html#targets)
+- [`renv`](https://ecohealthalliance.github.io/eha-ma-handbook/3-projects.html#package-management-with-renv)  
+- [git-crypt](https://ecohealthalliance.github.io/eha-ma-handbook/16-encryption.html)
+- [Reproducible
+  workflows](https://github.com/ecohealthalliance/building-blocks-of-reproducibility)
+
+Recommendations:  
+- One function per file in R/  
+- Non-function R scripts in another directory like `scripts/`  
+- Use the same names for targets and function arguments for those
+targets unless a function  
+- Nouns for targets, verbs for functions  
+- Use common suffixes for target types: `_file` for files, `_raw` for
+read-in but unprocessed data  
+- Use `fnmate` and `tflow` RStudio Add-Ins to make this easy, create
+shortcuts for these add-ins
+([talk](https://www.youtube.com/watch?v=jU1Zv21GvT4)), or the `usethis`
+package
+
+## Quick start
+
+- Create repo from template
+- rename .Rproj file
+- streamline packages in `packages.R`
+- modify `.gitattributes` to include any files that may need encryption
+- initialize `git-crypt` for repo
+- add relevant environment variables to `.env` file
 
 ## GitHub Actions
 
@@ -148,7 +188,10 @@ shortest interval you can run scheduled workflows is once every 5
 minutes. In the example workflow, the `schedule` specification has been
 set to run at 8 am everyday but this has been hashed out. If you would
 like to schedule your workflow runs, remove the hash and then set the
-POSIX cron syntax to the frequency that you require.
+POSIX cron syntax to the frequency that you require. *Note while github
+actions is highly reliable Github does not guarantee that a scheduled
+job will run if you’re using github servers and jobs are less likely to
+run if you choose a popular run time (generally on the hour).*
 
 ### The job
 
@@ -227,12 +270,12 @@ implemented by the program
 up but once activated makes sharing secure and seamless. To setup PGP
 and `git-crypt` on your project that is based on this template, see the
 [*Encryption* chapter of the EHA Modeling and Analytics
-Handbook](https://ecohealthalliance.github.io/eha-ma-handbook/13-encryption.html).
+Handbook](https://ecohealthalliance.github.io/eha-ma-handbook/14-encryption.html).
 
 Once you have enabled `git-crypt` on your project, you will need to make
 the following edits to the `container-workflow-template.yml` file to be
 able to perform symmetric key decryption described
-[here](https://ecohealthalliance.github.io/eha-ma-handbook/13-encryption.html#extra-use-a-symmetric-key-for-automated-processes).
+[here](https://ecohealthalliance.github.io/eha-ma-handbook/14-encryption.html#extra-use-a-symmetric-key-for-automated-processes).
 Here is the `container-workflow-template.yml` file updated to allow and
 perform symmetric key decryption:
 
@@ -296,17 +339,21 @@ changes to GitHub, you will then have to add the symmetric key to your
 GitHub repository as a secret.
 
 First, generate a symmetric key by running this in your project
-directory. This key can be regenerated at any time so there is no need
-keep it. 
+directory.
 
 ``` bash
-# export key to tmp folder; convert it to base64 and display the key; then delete it
-git-crypt export-key /tmp/key; base64 -i /tmp/key; rm /tmp/key
+git-crypt export-key git_crypt_key.key
 ```
 
-The key can now be used to decrypt the repository, and you
+`git_crypt_key.key` can now be used to decrypt the repository, and you
 can provide it to GitHub Actions as a secret environment variable (see
-<https://docs.github.com/en/actions/security-guides/encrypted-secrets>). 
-Add it to GitHub’s secret environment variable field as `GIT_CRYPT_KEY64`.
+<https://docs.github.com/en/actions/security-guides/encrypted-secrets>).
+However, since it is binary data, you’ll need to convert it to base64
+first. So run something like:
 
+``` bash
+cat git_crypt_key.key | base64 | pbcopy
+```
 
+to convert this file to base64 data, then paste it in GitHub’s secret
+environment variable field as `GIT_CRYPT_KEY64`.

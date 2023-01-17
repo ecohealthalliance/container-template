@@ -17,7 +17,8 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 data_input_targets <- tar_plan(
   ## Example data input target/s; delete and replace with your own data input
   ## targets
-  nutrition_data = zscorer::anthro2
+  
+  targets::tar_target("example_target",create_example_target(x = TRUE))
 )
 
 
@@ -25,11 +26,7 @@ data_input_targets <- tar_plan(
 data_processing_targets <- tar_plan(
   ## Example data processing target/s; delete and replace with your own data
   ## processing targets
-  nutrition_data_check = check_anthro_data(df = nutrition_data),
-  nutrition_data_issues = check_anthro_data(
-    df = nutrition_data, output = "check"
-  ),
-  nutrition_data_clean = nutrition_data_check |> filter(flag != 0)
+  
 )
 
 
@@ -37,10 +34,7 @@ data_processing_targets <- tar_plan(
 analysis_targets <- tar_plan(
   ## Example analysis target/s; delete and replace with your own analysis
   ## targets
-  wasting_recode = find_child_wasting(
-    df = nutrition_data_clean, index = "whz", zscore = "wfhz"
-  ),
-  wasting_prevalence = sum(wasting_recode[["wfhz"]], na.rm = TRUE) / nrow(wasting_recode)
+ 
 )
 
 ## Outputs
@@ -55,10 +49,11 @@ outputs_targets <- tar_plan(
 report_targets <- tar_plan(
   ## Example Rmarkdown report target/s; delete and replace with your own
   ## Rmarkdown report target/s
-  tar_render(
-    example_report, path = "reports/example_report.Rmd", 
-    output_dir = "outputs", knit_root_dir = here::here()
-  )
+  
+  # tar_render(
+  #   example_report, path = "reports/example_report.Rmd", 
+  #   output_dir = "outputs", knit_root_dir = here::here()
+  # )
 )
 
 ## Deploy targets
@@ -69,12 +64,12 @@ deploy_targets <- tar_plan(
   ## deployments. The aws_s3_upload function requires AWS credentials to be loaded
   ## but will print a warning and do nothing if not
   
-  html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
-                                                      pattern = "\\.html$"),
-  uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
-                                                        bucket = Sys.getenv("AWS_BUCKET"),
-                                                        error = FALSE,
-                                                        file_type = "html"),
+  # html_files = containerTemplateUtils::get_file_paths(tar_obj = example_report,
+  #                                                     pattern = "\\.html$"),
+  # uploaded_report = containerTemplateUtils::aws_s3_upload(html_files,
+  #                                                       bucket = Sys.getenv("AWS_BUCKET"),
+  #                                                       error = FALSE,
+  #                                                       file_type = "html"),
   # email_updates= 
   #   containerTemplateUtils::send_email_update(
   #     to = strsplit(Sys.getenv("EMAIL_RECIPIENTS"),";")[[1]],

@@ -13,11 +13,6 @@ library(here)
 library(knitr)
 library(rmarkdown)
 library(paws)
-library(tflow)
-library(fnmate)
-library(remotes)
-library(containerTemplateUtils) 
-library(dotenv)
 library(conflicted)
 
 ################################################################################
@@ -29,5 +24,9 @@ library(conflicted)
 #
 ################################################################################
 
+library(tflow)
+library(fnmate)
+library(containerTemplateUtils) 
+library(dotenv)
 library(usethis)
 library(kableExtra)

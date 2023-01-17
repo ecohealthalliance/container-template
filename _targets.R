@@ -17,6 +17,8 @@ for (f in list.files(here::here("R"), full.names = TRUE)) source (f)
 data_input_targets <- tar_plan(
   ## Example data input target/s; delete and replace with your own data input
   ## targets
+  
+  targets::tar_target("example_target",create_example_target(x = TRUE))
 )
 
 

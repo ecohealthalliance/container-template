@@ -18,6 +18,7 @@ library(fnmate)
 library(remotes)
 library(containerTemplateUtils) 
 library(dotenv)
+library(conflicted)
 
 ################################################################################
 #

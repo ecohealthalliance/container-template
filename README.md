@@ -56,6 +56,7 @@ package
 - modify `.gitattributes` to include any files that may need encryption
 - initialize `git-crypt` for repo
 - add relevant environment variables to `.env` file
+- rename github actions workflows
 
 ## GitHub Actions
 

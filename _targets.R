@@ -47,6 +47,7 @@ outputs_targets <- tar_plan(
 report_targets <- tar_plan(
   ## Example Rmarkdown report target/s; delete and replace with your own
   ## Rmarkdown report target/s
+  
   # tar_render(
   #   example_report, path = "reports/example_report.Rmd", 
   #   output_dir = "outputs", knit_root_dir = here::here()

@@ -31,7 +31,7 @@ jobs:
       - name: update permissions for container based workflows
         run: git config --global --add safe.directory /__w/container-template/container-template
       
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       
       - name: Install system dependencies
         run: |

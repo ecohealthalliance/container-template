@@ -14,7 +14,7 @@ if (file.exists(".env")) {
 options(
   repos = c(RSPM = "https://packagemanager.rstudio.com/all/latest",
             CRAN = "https://cran.rstudio.com/"),
-  renv.config.auto.snapshot = TRUE, ## Attempt to keep renv.lock updated automatically
+  renv.config.auto.snapshot = FALSE, ## Attempt to keep renv.lock updated automatically
   renv.config.rspm.enabled = TRUE, ## Use RStudio Package manager for pre-built package binaries
   renv.config.install.shortcuts = TRUE, ## Use the existing local library to fetch copies of packages for renv
   renv.config.cache.enabled = TRUE   ## Use the renv build cache to speed up install times

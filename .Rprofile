@@ -31,12 +31,12 @@ if (Sys.info()[["sysname"]] %in% c("Darwin", "Windows")){
 }
 source("renv/activate.R")
 
-# # If project packages have conflicts define them here so as
-# # as to manage them across all sessions when building targets
-# if(requireNamespace("conflicted", quietly = TRUE)) {
-#   conflicted::conflict_prefer("filter", "dplyr", quiet = TRUE)
-#   conflicted::conflict_prefer("count", "dplyr", quiet = TRUE)
-#   conflicted::conflict_prefer("select", "dplyr", quiet = TRUE)
-#   conflicted::conflict_prefer("set_names", "magrittr", quiet = TRUE)
-#   conflicted::conflict_prefer("View", "utils", quiet = TRUE)
-# }
+# If project packages have conflicts define them here so as
+# as to manage them across all sessions when building targets
+if(requireNamespace("conflicted", quietly = TRUE)) {
+  conflicted::conflict_prefer("filter", "dplyr", quiet = TRUE)
+  conflicted::conflict_prefer("count", "dplyr", quiet = TRUE)
+  conflicted::conflict_prefer("select", "dplyr", quiet = TRUE)
+  conflicted::conflict_prefer("set_names", "magrittr", quiet = TRUE)
+  conflicted::conflict_prefer("View", "utils", quiet = TRUE)
+}

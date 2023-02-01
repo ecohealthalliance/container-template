@@ -24,13 +24,12 @@ jobs:
     #runs-on: [self-hosted, linux, x64, onprem-aegypti]   # Run the workflow on EHA aegypti runner
     #runs-on: [self-hosted, linux, x64, onprem-prospero]  # Run the workflow on EHA prospero runner
     container:
-      image: rocker/verse:4.1.2
+      image: rocker/verse:4.2.1
       
     steps:
       # update to: git config --global --add safe.directory /__w/your-repo/your-repo
       - name: update permissions for container based workflows
         run: git config --global --add safe.directory /__w/container-template/container-template
-      
       - uses: actions/checkout@v3
       
       - name: Install system dependencies

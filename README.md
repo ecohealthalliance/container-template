@@ -11,6 +11,11 @@ public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostat
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![container-workflow-template](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml/badge.svg)](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml)
+[![License for Code:
+MIT](https://img.shields.io/badge/License%20(for%20code)-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License:
+CC-BY-4.0](https://img.shields.io/badge/License%20(for%20text)-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 <!-- badges: end -->
 
 This is a template repository of a containerised R workflow built on the

@@ -19,6 +19,10 @@ knitr::opts_chunk$set(
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![container-workflow-template](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml/badge.svg)](https://github.com/ecohealthalliance/container-template/actions/workflows/container-workflow-template.yml)
+[![License for Code: MIT](https://img.shields.io/badge/License%20(for%20code)-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License:
+CC-BY-4.0](https://img.shields.io/badge/License%20(for%20text)-CC_BY_4.0-blue.svg)](https://creativecommons.org/licenses/by/4.0/)
+
 <!-- badges: end -->
 
 This is a template repository of a containerised R workflow built on the `targets` framework, made portable using `renv`, and ran manually or automatically using `GitHub Actions`. To use this template click on the "use this template button" and then select create a new repository.

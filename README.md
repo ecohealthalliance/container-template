@@ -57,6 +57,8 @@ package
 - initialize `git-crypt` for repo
 - add relevant environment variables to `.env` file
 - rename github actions workflows
+- update safe repo section of github action
+- add `git-crypt` key as secret variable to repo
 
 ## GitHub Actions
 
